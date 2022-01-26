@@ -1,0 +1,165 @@
+
+
+
+<!doctype html>
+
+    <html lang="fr">
+        <head>
+            <meta charset="utf-8">
+            <title>Accueil</title>
+
+            <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+            <script> 
+                $("#time").ready(function(){
+                    setInterval(function(){
+                        $("#time").load(" #time > *");
+                    }, 1000);
+                });
+
+                $("#meteo").ready(function(){
+                    setInterval(function(){
+                        $("#meteo").load(" #meteo > *");
+                    }, 600000);
+                });
+            </script>
+
+            <script src="{{ url_for('static', filename='change_background.js') }}"></script>
+
+        </head>
+        
+       
+        <body>
+            <br>
+            
+            <div id = "total_window">
+                <h1>Bienvenue !</h1>
+
+                <img id="output">
+
+                <div id = "time" class="ligne1">
+                
+                    <h3>{{time_dico["time"]}}</h3>                    
+                    <p>{{time_dico["date"]}}</p>
+                </div>
+
+                <div id = "meteo" class = "ligne1">
+                    <p id = "temp">{{meteo["temp"]}}
+                    {% if time_dico["unixtime"] > meteo["sunrise"] and time_dico["unixtime"] < meteo["sunset"] %}
+                    
+                    {% if "nuage" in meteo["description"] or "couvert" in meteo["description"] %}
+                    <img src="http://openweathermap.org/img/wn/04d@2x.png">
+                    {% endif %}
+                    
+                    {% if "dégagé" in meteo["description"] %}
+                    <img src="http://openweathermap.org/img/wn/01d@2x.png">
+                    {% endif %}
+                    
+                    {% if "pluie" in meteo["description"] %}
+                    <img src="http://openweathermap.org/img/wn/10d@2x.png">
+                    {% endif %}
+                    
+                    {% if "orage" in meteo["description"] %}
+                    <img src="http://openweathermap.org/img/wn/11d@2x.png">
+                    {% endif %}
+                    
+                    {% if "neige" in meteo["description"] %}
+                    <img src="http://openweathermap.org/img/wn/13d@2x.png">
+                    {% endif %}
+                    
+                    {% endif %}
+                    
+                    {% if time_dico["unixtime"] < meteo["sunrise"] or time_dico["unixtime"] > meteo["sunset"] %}
+                    
+                    {% if "nuage" in meteo["description"] or "couvert" in meteo["description"] %}
+                    <img src="http://openweathermap.org/img/wn/04n@2x.png">
+                    {% endif %}
+                    
+                    {% if "dégagé" in meteo["description"] %}
+                    <img src="http://openweathermap.org/img/wn/01n@2x.png">
+                    {% endif %}
+                    
+                    {% if "pluie" in meteo["description"] %}
+                    <img src="http://openweathermap.org/img/wn/10n@2x.png">
+                    {% endif %}
+                    
+                    {% if "orage" in meteo["description"] %}
+                    <img src="http://openweathermap.org/img/wn/11n@2x.png">
+                    {% endif %}
+                    
+                    {% if "neige" in meteo["description"] %}
+                    <img src="http://openweathermap.org/img/wn/13n@2x.png">
+                    {% endif %}
+                    
+                    {% endif %}
+                    </p>
+                    
+                    
+                    <br>
+                    
+                    <p id="temps">{{meteo["description"]}}</p>
+                    
+                
+
+                    <p id="temps">{{meteo["temp_min"]}}</p>
+                    <p id="temps">{{meteo["temp_max"]}}</p>
+
+                    <p id="temps">{{meteo["humidity"]}}</p>
+
+                    <p id="temps">{{meteo["wind_speed"]}}</p>
+                    
+                </div>
+
+                <div id = "news" class="ligne2">
+                    <h2>Actualités</h2>
+                    {% for e in news %}
+                        <div id = "individual_news"> 
+                            <p>{{e[0]}}</p>
+                            <a href="{{e[1]}}" target="_blank">Lire l'article</a>
+                            <br>
+                        </div>
+                    {% endfor %}
+                </div>
+
+
+                <div id = "covid" class="ligne2">
+                    <h3>Statistiques - COVID-19 dans le monde</h3>
+                    <p>Cas: <label id = "couleur">{{covid["cas"]}}</label></p>
+                    <p>Décès: <label id = "couleur">{{covid["morts"]}}</label></p>
+                    <p>Guérisons: <label id = "couleur">{{covid["guerisons"]}}</label></p>
+                </div>
+
+                <!--
+                <div id = "google">
+
+                    <form  id="form" action="http://127.0.0.1:5000/" method="POST">
+                        <input type="search" class ="searchbar" id="query" name="recherche" placeholder="Rechercher..." aria-label="Recherche sur Google">
+                        <button class="searchbar" id = "bouton_recherche">Rechercher</button>
+                    </form>
+
+                    <div id = "resultats_recherche">
+                        {% for e in resultats_recherche %}
+                        <p> 
+                            <br>
+                            <a href={{e[1]}} target="_blank">{{e[0]}}</a> <br/>
+                            <a href={{e[1]}} target="_blank" style="color:#ffffff;">{{e[1]}}</a> 
+                            <br>                        
+                        </p>
+                        {% endfor %}
+                    </div>
+
+                </div>
+                -->
+
+                <div id="bgimg">
+                    <label for="file-upload" class="bouton_fond_ecran">
+                        Choisir un fond
+                    </label>
+                    <input id="file-upload" type="file" accept="image/*" onchange="readImage()" onchange = "change_bg('white')"/>
+                    <button class = "bouton_supprimer_fond" onclick="retour_fond()">Supprimer le fond</button>
+                </div>
+            </div>
+        </body>
+    </html>
