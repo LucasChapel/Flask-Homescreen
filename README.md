@@ -1,5 +1,6 @@
 # Flask-Homescreen
-A trial project using the Flask framework and based around the use of different APIs. The project is in french.
+A trial project using the Flask framework and based around the use of different APIs. 
+The project is in french (and the meteorological information is relevant to Paris, France).
 
 How to access the website
 1. Run the python program
