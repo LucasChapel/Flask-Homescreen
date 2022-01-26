@@ -7,3 +7,4 @@ How to access the website
 2. Visit the following url: http://127.0.0.1:5000/
 
 --> This url is local and used by the flask framework as output
+--> Please watch fullscreen, the window size adjustment needs improvement
